@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.itrip.dao"/>
+	</bean>
+	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
+		<property name="password" value="123456"/>
+		<property name="username" value="root"/>
+		<property name="url" value="jdbc:mysql:///itripdb?serverTimezone=Asia/Shanghai"/>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	</bean>
+	<context:component-scan base-package="cn.itrip.trade.service,cn.itrip.common"/>
+	<bean class="redis.clients.jedis.JedisPool" id="jedisPool">
+		<constructor-arg name="host" value="127.0.0.1"/>
+	</bean>
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.126.com"/>
+		<property name="password" value="TCYUBDDJQSJIGWJL"/>
+		<property name="username" value="y2714403672@126.com"/>
+	</bean>
+	<bean class="cn.itrip.trade.sdk.wx.Wxconfig" id="wxPayConfig">
+		<property name="addID" value="wxab8acb865bb1637e"/>
+		<property name="mchID" value="11473623"/>
+		<property name="key" value="2ab9071b06b9f739b950ddb41db2690d"/>
+	</bean>
+	<bean class="cn.itrip.trade.sdk.wx.WXPay" id="pay">
+		<constructor-arg name="config" ref="wxPayConfig"/>
+		 <constructor-arg name="notifyUrl" value=" http://gsfnuv.natappfree.cc/trade/api/wxpay/notifUrl"/>
+	</bean>
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		 <property name="username"  value=""/>
+		 <property name="password" value=""/>
+		<property name="host"   value=""/>
+	</bean>
+</beans>

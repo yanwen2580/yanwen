@@ -1,0 +1,10 @@
+**/target/
+.settings/
+.classpath
+.mymetadata
+.project
+.gitconfig
+.idea/
+*.iml
+**/classes/
+Thumbs.db
